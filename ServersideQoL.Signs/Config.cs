@@ -5,6 +5,9 @@ namespace ServersideQoL.Signs;
 public sealed class Config(ConfigFile cfg, Logger logger) : ConfigBase<Config>(cfg, logger)
 {
   internal const string NotSetDefaultColor = "black";
+  internal const string TimeSignsDisplayAnalogAndDigital = "AnalogAndDigital";
+  internal const string TimeSignsDisplayAnalogOnly = "AnalogOnly";
+  internal const string TimeSignsDisplayDigitalOnly = "DigitalOnly";
 
   public override ConfigEntry<bool> Enabled { get; } = BindEx(cfg, true,
     "Enables/disables the entire mod");
@@ -16,7 +19,12 @@ public sealed class Config(ConfigFile cfg, Logger logger) : ConfigBase<Config>(c
   public ConfigEntry<bool> TimeSigns { get; } = BindEx(cfg, true,
     Invariant($"True to update sign texts which contain time emojis (any of {string.Concat(SignProcessor.ClockEmojis)}) with the in-game time"));
   public ConfigEntry<string> TimeSignsPlaceholder { get; } = BindEx(cfg, "",
-    "Optional text that will be recognized in addition to time emojis and replaced with the in-game time on signs");
+    "Optional text that will be recognized in addition to time emojis and replaced with the in-game time on signs. Append :analog, :digital or :both to a time emoji or the placeholder to pin that display mode on the sign (overriding TimeSignsDisplay for it); :auto removes the pin and follows TimeSignsDisplay again");
+  public ConfigEntry<string> TimeSignsDisplay { get; } = BindEx(cfg, TimeSignsDisplayAnalogAndDigital,
+    "What time signs show: the analog clock emoji and the digital time, the analog clock emoji only, or the digital time only",
+    new AcceptableValueList<string>([TimeSignsDisplayAnalogAndDigital, TimeSignsDisplayAnalogOnly, TimeSignsDisplayDigitalOnly]));
+  public ConfigEntry<bool> TimeSigns12Hour { get; } = BindEx(cfg, false,
+    "True to show the digital time on time signs in 12-hour format (e.g. 1:24 PM) instead of 24-hour format (13:24)");
   public ConfigEntry<bool> FermenterSigns { get; } = BindEx(cfg, false,
     "True to automatically put a sign on the tap side of fermenters, showing the content and the remaining fermentation time");
 

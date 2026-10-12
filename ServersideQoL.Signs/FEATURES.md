@@ -1,3 +1,3 @@
 - Set default color for signs
-- Show in-game time on signs
+- Show in-game time on signs (analog clock emoji, digital time, or both - configurable globally and per sign; 12 or 24-hour format)
 - Automatically put signs on fermenters showing the remaining fermentation time
