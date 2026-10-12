@@ -1,0 +1,1 @@
+- Automatically place a sign above each portal showing the portal's tag
